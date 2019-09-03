@@ -40,6 +40,7 @@ static LONG_OPTIONS: &str = r##"
 LONG VIEW OPTIONS
   -b, --binary       list file sizes with binary prefixes
   -B, --bytes        list file sizes in bytes, without any prefixes
+  -o, --user         list each file's owner
   -g, --group        list each file's group
   -h, --header       add a header row to each column
   -H, --links        list each file's number of hard links

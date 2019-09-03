@@ -118,7 +118,8 @@ impl Mode {
         // user about flags that won’t have any effect.
         if matches.is_strict() {
             for option in &[ &flags::BINARY, &flags::BYTES, &flags::INODE, &flags::LINKS,
-                             &flags::HEADER, &flags::BLOCKS, &flags::TIME, &flags::GROUP ] {
+                             &flags::HEADER, &flags::BLOCKS, &flags::TIME, &flags::OWNER,
+                             &flags::GROUP ] {
                 if matches.has(option)? {
                     return Err(Useless(*option, false, &flags::LONG));
                 }
@@ -222,11 +223,12 @@ impl Columns {
         let git = cfg!(feature="git") && matches.has(&flags::GIT)?;
 
         let blocks = matches.has(&flags::BLOCKS)?;
+        let user   = matches.has(&flags::OWNER)?;
         let group  = matches.has(&flags::GROUP)?;
         let inode  = matches.has(&flags::INODE)?;
         let links  = matches.has(&flags::LINKS)?;
 
-        Ok(Columns { time_types, git, blocks, group, inode, links })
+        Ok(Columns { time_types, git, blocks, user, group, inode, links })
     }
 }
 
@@ -388,8 +390,9 @@ mod test {
     static TEST_ARGS: &[&Arg] = &[ &flags::BINARY, &flags::BYTES,    &flags::TIME_STYLE,
                                    &flags::TIME,   &flags::MODIFIED, &flags::CHANGED,
                                    &flags::CREATED, &flags::ACCESSED, &flags::ICONS,
-                                   &flags::HEADER, &flags::GROUP,  &flags::INODE, &flags::GIT,
-                                   &flags::LINKS,  &flags::BLOCKS, &flags::LONG,  &flags::LEVEL,
+                                   &flags::HEADER, &flags::OWNER,     &flags::GROUP,
+                                   &flags::INODE,  &flags::GIT,       &flags::LINKS,
+                                   &flags::BLOCKS, &flags::LONG,  &flags::LEVEL,
                                    &flags::GRID,   &flags::ACROSS, &flags::ONE_LINE ];
 
     macro_rules! test {
@@ -609,6 +612,7 @@ mod test {
         test!(just_git:      Mode <- ["--git"],    None;  Last => like Ok(Mode::Grid(_)));
 
         test!(just_header_2: Mode <- ["--header"], None;  Complain => err Misfire::Useless(&flags::HEADER, false, &flags::LONG));
+        test!(just_owner_2:  Mode <- ["--owner"],  None;  Complain => err Misfire::Useless(&flags::OWNER,  false, &flags::LONG));
         test!(just_group_2:  Mode <- ["--group"],  None;  Complain => err Misfire::Useless(&flags::GROUP,  false, &flags::LONG));
         test!(just_inode_2:  Mode <- ["--inode"],  None;  Complain => err Misfire::Useless(&flags::INODE,  false, &flags::LONG));
         test!(just_links_2:  Mode <- ["--links"],  None;  Complain => err Misfire::Useless(&flags::LINKS,  false, &flags::LONG));

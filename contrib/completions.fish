@@ -57,6 +57,7 @@ complete -c exa -s 'g' -l 'group'    -d "List each file's group"
 complete -c exa -s 'h' -l 'header'   -d "Add a header row to each column"
 complete -c exa -s 'h' -l 'links'    -d "List each file's number of hard links"
 complete -c exa -s 'g' -l 'group'    -d "List each file's inode number"
+complete -c exa -s 'o' -l 'owner'    -d "List each file's owner"
 complete -c exa -s 'S' -l 'blocks'   -d "List each file's number of filesystem blocks"
 complete -c exa -s 't' -l 'time'  -x -d "Which timestamp field to list" -a "
     modified\t'Display modified time'

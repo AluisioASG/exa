@@ -37,6 +37,7 @@ __exa() {
         {-H,--links}"[List each file's number of hard links]" \
         {-i,--inode}"[List each file's inode number]" \
         {-m,--modified}"[Use the modified timestamp field]" \
+        {-o,--owner}"[List each file's owner]" \
         {-S,--blocks}"[List each file's number of filesystem blocks]" \
         {-t,--time}="[Which time field to show]:(time field):(accessed changed created modified)" \
         --time-style="[How to format timestamps]:(time style):(default iso long-iso full-iso)" \

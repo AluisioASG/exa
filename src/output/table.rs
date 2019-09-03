@@ -45,6 +45,7 @@ pub struct Columns {
     pub inode: bool,
     pub links: bool,
     pub blocks: bool,
+    pub user: bool,
     pub group: bool,
     pub git: bool,
 }
@@ -69,7 +70,9 @@ impl Columns {
             columns.push(Column::Blocks);
         }
 
-        columns.push(Column::User);
+        if self.user {
+            columns.push(Column::User);
+        }
 
         if self.group {
             columns.push(Column::Group);
